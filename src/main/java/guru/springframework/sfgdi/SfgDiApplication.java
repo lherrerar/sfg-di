@@ -1,12 +1,17 @@
 package guru.springframework.sfgdi;
 
+import guru.springframework.sfgdi.config.SfgConfigutarion;
+import guru.springframework.sfgdi.config.SfgConstructorConfig;
 import guru.springframework.sfgdi.controllers.*;
+import guru.springframework.sfgdi.datasource.FakeDataSource;
 import guru.springframework.sfgdi.services.PrototypeBean;
 import guru.springframework.sfgdi.services.SingletonBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+
+import java.security.spec.RSAOtherPrimeInfo;
 
 @ComponentScan(basePackages = {"guru.springframework.sfgdi", "com.springframework.pets"})
 @SpringBootApplication
@@ -49,6 +54,26 @@ public class SfgDiApplication {
 		System.out.println(prototypeBean1.getMyScope());
 		PrototypeBean prototypeBean2 =  ctx.getBean(PrototypeBean.class);
 		System.out.println(prototypeBean2.getMyScope());
+
+		System.out.println("-------- Fake data source");
+		FakeDataSource fakeDataSource = ctx.getBean(FakeDataSource.class);
+		System.out.println(fakeDataSource.getUsername());
+		System.out.println(fakeDataSource.getPassword());
+		System.out.println(fakeDataSource.getJdbcurl());
+
+		System.out.println("---------- Config props Bean");
+
+		SfgConfigutarion sfgConfigutarion = ctx.getBean(SfgConfigutarion.class);
+
+		System.out.println(sfgConfigutarion.getUsername());
+		System.out.println(sfgConfigutarion.getPassword());
+		System.out.println(sfgConfigutarion.getJdbcurl());
+
+		System.out.println("----------- Constructor binding");
+		SfgConstructorConfig sfgConstructorConfig = ctx.getBean(SfgConstructorConfig.class);
+		System.out.println(sfgConstructorConfig.getUsername());
+		System.out.println((sfgConstructorConfig.getPassword()));
+		System.out.println(sfgConstructorConfig.getJdbcurl());
 	}
 
 }
